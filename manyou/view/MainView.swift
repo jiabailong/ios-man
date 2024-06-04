@@ -16,14 +16,14 @@ struct MainView: View {
             
             // 固定大小的标签栏在底部
             HStack {
-                Text("Tab 1")
+                Text("首页")
                 Spacer()
-                Text("Tab 2")
+                Text("助手")
                 Spacer()
-                Text("Tab 3")
+                Text("我的")
             }
             .padding()
-            .background(Color.gray.opacity(0.2))
+            .background(Color.gray.opacity(1))
             .frame(height: 50) // 固定高度
         }
         .onAppear {

@@ -40,9 +40,7 @@ struct ContentView: View {
                        Alert(title: Text("登录结果"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
                    }
                    
-                   NavigationLink(destination: MainView()
-                    
-                    , isActive: $navigateToMainView) {
+                   NavigationLink(destination: MainView(), isActive: $navigateToMainView) {
                        EmptyView()
                    }
                }
@@ -91,12 +89,6 @@ struct ContentView: View {
                             userManager.token=tk
                             navigateToMainView = true // 登录成功后跳转
 
-                            //                        if let success = json["success"] as? Bool, success {
-                            //                            alertMessage = "登录成功"
-                            //                        } else {
-                            //                            alertMessage = json["message"] as? String ?? "登录失败"
-                            //                        }
-                            //                        showingAlert = true
                         }
                     }
                 } catch {
