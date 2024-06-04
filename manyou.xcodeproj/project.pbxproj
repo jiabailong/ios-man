@@ -14,6 +14,12 @@
 		8B7F39A72C0DA6B0007349BF /* manyouTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39A62C0DA6B0007349BF /* manyouTests.swift */; };
 		8B7F39B12C0DA6B0007349BF /* manyouUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39B02C0DA6B0007349BF /* manyouUITests.swift */; };
 		8B7F39B32C0DA6B0007349BF /* manyouUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39B22C0DA6B0007349BF /* manyouUITestsLaunchTests.swift */; };
+		8B7F39C12C0DB7B4007349BF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39C02C0DB7B4007349BF /* UserManager.swift */; };
+		8B7F39C42C0DBAE9007349BF /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39C32C0DBAE9007349BF /* WebView.swift */; };
+		8B7F39C62C0DBB1A007349BF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39C52C0DBB1A007349BF /* MainView.swift */; };
+		8B7F39CA2C0DC598007349BF /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39C92C0DC598007349BF /* ChatView.swift */; };
+		8B7F39CC2C0DC5C0007349BF /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7F39CB2C0DC5C0007349BF /* Message.swift */; };
+		8B7F39D12C0EB84B007349BF /* EventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7F39D02C0EB84B007349BF /* EventSource */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,11 @@
 		8B7F39AC2C0DA6B0007349BF /* manyouUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = manyouUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B7F39B02C0DA6B0007349BF /* manyouUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = manyouUITests.swift; sourceTree = "<group>"; };
 		8B7F39B22C0DA6B0007349BF /* manyouUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = manyouUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8B7F39C02C0DB7B4007349BF /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		8B7F39C32C0DBAE9007349BF /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		8B7F39C52C0DBB1A007349BF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		8B7F39C92C0DC598007349BF /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		8B7F39CB2C0DC5C0007349BF /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B7F39D12C0EB84B007349BF /* EventSource in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +106,8 @@
 		8B7F39942C0DA6AD007349BF /* manyou */ = {
 			isa = PBXGroup;
 			children = (
+				8B7F39C22C0DBAD8007349BF /* view */,
+				8B7F39BF2C0DB77E007349BF /* data */,
 				8B7F39952C0DA6AD007349BF /* manyouApp.swift */,
 				8B7F39972C0DA6AD007349BF /* ContentView.swift */,
 				8B7F39992C0DA6B0007349BF /* Assets.xcassets */,
@@ -127,6 +141,25 @@
 			path = manyouUITests;
 			sourceTree = "<group>";
 		};
+		8B7F39BF2C0DB77E007349BF /* data */ = {
+			isa = PBXGroup;
+			children = (
+				8B7F39C02C0DB7B4007349BF /* UserManager.swift */,
+				8B7F39CB2C0DC5C0007349BF /* Message.swift */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		8B7F39C22C0DBAD8007349BF /* view */ = {
+			isa = PBXGroup;
+			children = (
+				8B7F39C32C0DBAE9007349BF /* WebView.swift */,
+				8B7F39C52C0DBB1A007349BF /* MainView.swift */,
+				8B7F39C92C0DC598007349BF /* ChatView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +176,9 @@
 			dependencies = (
 			);
 			name = manyou;
+			packageProductDependencies = (
+				8B7F39D02C0EB84B007349BF /* EventSource */,
+			);
 			productName = manyou;
 			productReference = 8B7F39922C0DA6AD007349BF /* manyou.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +251,9 @@
 				Base,
 			);
 			mainGroup = 8B7F39892C0DA6AD007349BF;
+			packageReferences = (
+				8B7F39CF2C0EB84B007349BF /* XCRemoteSwiftPackageReference "EventSource" */,
+			);
 			productRefGroup = 8B7F39932C0DA6AD007349BF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,7 +296,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B7F39C12C0DB7B4007349BF /* UserManager.swift in Sources */,
+				8B7F39C42C0DBAE9007349BF /* WebView.swift in Sources */,
 				8B7F39982C0DA6AD007349BF /* ContentView.swift in Sources */,
+				8B7F39C62C0DBB1A007349BF /* MainView.swift in Sources */,
+				8B7F39CA2C0DC598007349BF /* ChatView.swift in Sources */,
+				8B7F39CC2C0DC5C0007349BF /* Message.swift in Sources */,
 				8B7F39962C0DA6AD007349BF /* manyouApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,6 +621,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8B7F39CF2C0EB84B007349BF /* XCRemoteSwiftPackageReference "EventSource" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Recouse/EventSource";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8B7F39D02C0EB84B007349BF /* EventSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B7F39CF2C0EB84B007349BF /* XCRemoteSwiftPackageReference "EventSource" */;
+			productName = EventSource;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8B7F398A2C0DA6AD007349BF /* Project object */;
 }
