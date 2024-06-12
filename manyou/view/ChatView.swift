@@ -141,7 +141,7 @@ struct SSEChatView: View {
                     if let url = URL(string: "http://39.101.191.170:8080/manyou/sendMsg2") {
                                    let tk=userManager.token!
                                    let headers  = ["token": tk]
-                                   let queryParams = ["msg": newMessage, "type": "1"]
+                                   let queryParams = ["msg": newMessage, "fid": "1"]
                                    sseClient.connect(url: url, headers: headers, queryParams: queryParams)
                                }
                     newMessage = ""
