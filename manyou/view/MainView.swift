@@ -25,11 +25,32 @@ struct MainView: View {
                             )
                         
                     case .work:
-                        SecondPageView()
+                        WebView(url: URL(string: "http://39.101.191.170:8080/manyou/wk.html")!)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.white)
+                            .overlay(
+                                NavigationLink(destination: SSEChatView(), isActive: $navigateToChart) {
+                                    EmptyView()
+                                }
+                            )
                     case .life:
-                        ThirdPageView()
+                        WebView(url: URL(string: "http://39.101.191.170:8080/manyou/comfort.html")!)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.white)
+                            .overlay(
+                                NavigationLink(destination: SSEChatView(), isActive: $navigateToChart) {
+                                    EmptyView()
+                                }
+                            )
                     case .me:
-                        FourthPageView()
+                        WebView(url: URL(string: "http://39.101.191.170:8080/manyou/mine.html")!)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.white)
+                            .overlay(
+                                NavigationLink(destination: SSEChatView(), isActive: $navigateToChart) {
+                                    EmptyView()
+                                }
+                            )
                     }
                     
                     // 固定大小的标签栏在底部
