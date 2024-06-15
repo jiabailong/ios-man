@@ -16,7 +16,9 @@ struct WebView: UIViewRepresentable {
         webView.uiDelegate = context.coordinator
         webView.configuration.preferences.javaScriptEnabled = true
         
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData // 设置缓存策略
+
         webView.load(request)
         
         return webView
