@@ -5,9 +5,17 @@ struct MessageData: Codable {
     let content: String
     
 }
+struct QA: Codable,Identifiable {
+    let id: UUID = UUID()
 
+    let question: String
+    let name: String
+    let description: String
+}
 class SSEClient: ObservableObject {
     @Published var messages: [String] = []
+    @Published var items: [QA] = [] // 新增的属性，用于存储从 API 获取的数据
+
     private var eventSourceDataTask: EventSource.DataTask?
     var curIndex:Int = -1;
     var msg:String = "";
@@ -53,6 +61,45 @@ class SSEClient: ObservableObject {
             }
         }
     }
+    func fetchItems() {
+           guard let url = URL(string: "http://39.101.191.170:8080/manyou/getQA") else {    print("FfetchItemsno")
+               return }
+        print("FfetchItems")
+
+        var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                // 假设我们需要发送以下 JSON 数据
+                let parameters: [String: Any] = [
+                    "type": "1"
+                ]
+                
+                // 将参数转换为 JSON 数据
+                do {
+                    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+                } catch {
+                    print("Failed to serialize JSON: \(error)")
+                    return
+                }
+
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    if let data = data {
+                        do {
+                            let decodedItems = try JSONDecoder().decode([QA].self, from: data)
+                            DispatchQueue.main.async {
+                                self.items = decodedItems
+                            }
+                        } catch {
+                            print("Failed to decode items: \(error)")
+                        }
+                    } else if let error = error {
+                        print("Failed to fetch items: \(error)")
+                    }
+                }
+                
+                task.resume()
+       }
     private func handleEvent( serverMessage:ServerMessage) {
         if let event = serverMessage.event {
             switch event {
@@ -116,6 +163,25 @@ struct SSEChatView: View {
    
     var body: some View {
         VStack {
+            // 新增的横向 ScrollView
+                      ScrollView(.horizontal, showsIndicators: false) {
+                          HStack(spacing: 10) {
+                              ForEach(sseClient.items) { item in
+                                  VStack {
+                                    
+                                      Text(item.name)
+                                          .font(.caption)
+                                          .padding(10)
+                                          .background(Color.purple) // 设置背景颜色为紫色
+                                        .cornerRadius(10) // 设置圆角
+                                          .foregroundColor(.white) // 设置字体颜色为白色
+                                  }
+                                  
+                              }
+                          }
+                          .padding(.horizontal)
+                      }
+                      .frame(height: 50)
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(sseClient.messages.indices, id: \.self) { index in
@@ -169,9 +235,12 @@ struct SSEChatView: View {
             })
             .onAppear {
                 setupNavigationBarAppearance()
+                sseClient.fetchItems()
+
             }
             .onDisappear {
                 sseClient.disconnect()
+
             }
     }
     private func setupNavigationBarAppearance() {
