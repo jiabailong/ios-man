@@ -3,7 +3,9 @@ import EventSource
 
 struct MessageData: Codable {
     let content: String
-    
+    private enum CodingKeys: String, CodingKey {
+          case content = "msg"
+      }
 }
 struct QA: Codable,Identifiable {
     let id: UUID = UUID()
