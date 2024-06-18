@@ -6,7 +6,11 @@
 //
 
 import Foundation
-class UserManager: ObservableObject {
-    @Published var token: String? = nil
-    @Published var refresh_token: String? = nil
+class UserManager {
+    // 创建单例实例
+      static let shared = UserManager()
+     var token: String? = nil
+     var refresh_token: String? = nil
+    private init() {}
+
 }

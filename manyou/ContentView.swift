@@ -5,7 +5,6 @@ struct ContentView: View {
     @State private var password: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    @EnvironmentObject var userManager: UserManager
     @State private var isLoggedIn = false
     
     var body: some View {
@@ -86,7 +85,10 @@ func login() {
                 DispatchQueue.main.async {
                     print("响应数据: \(json)")
                     let tk=json["token"] as? String
-                    userManager.token=tk
+                    let rk=json["refreshtoken"] as? String
+
+                    UserManager.shared.token=tk
+                    UserManager.shared.refresh_token=rk
                     isLoggedIn = true
                     
                 }
@@ -103,7 +105,7 @@ func login() {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(UserManager())
+        ContentView()
     }
 }
 

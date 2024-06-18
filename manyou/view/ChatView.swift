@@ -2,7 +2,7 @@ import SwiftUI
 import EventSource
 
 struct MessageData: Codable {
-    let content: String
+    let msg: String
     
 }
 struct QA: Codable,Identifiable {
@@ -12,10 +12,13 @@ struct QA: Codable,Identifiable {
     let name: String
     let description: String
 }
+struct MSGQA: Codable {
+    let qaList: [QA]
+    let messageList: [MessageData]
+}
 class SSEClient: ObservableObject {
     @Published var messages: [String] = []
     @Published var items: [QA] = [] // 新增的属性，用于存储从 API 获取的数据
-
     private var eventSourceDataTask: EventSource.DataTask?
     var curIndex:Int = -1;
     var msg:String = "";
@@ -69,10 +72,11 @@ class SSEClient: ObservableObject {
         var request = URLRequest(url: url)
                 request.httpMethod = "POST"
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                
+                let tk=UserManager.shared.token!
                 // 假设我们需要发送以下 JSON 数据
                 let parameters: [String: Any] = [
-                    "type": "1"
+                    "type": "1",
+                    "token":tk
                 ]
                 
                 // 将参数转换为 JSON 数据
@@ -82,13 +86,17 @@ class SSEClient: ObservableObject {
                     print("Failed to serialize JSON: \(error)")
                     return
                 }
-
+        
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     if let data = data {
                         do {
-                            let decodedItems = try JSONDecoder().decode([QA].self, from: data)
+                            // Print the JSON data as a string
+                               if let jsonString = String(data: data, encoding: .utf8) {
+                                   print("res Body: \(jsonString)")
+                               }
+                            let decodedItems = try JSONDecoder().decode(MSGQA.self, from: data)
                             DispatchQueue.main.async {
-                                self.items = decodedItems
+                                self.items = decodedItems.qaList
                             }
                         } catch {
                             print("Failed to decode items: \(error)")
@@ -127,7 +135,7 @@ class SSEClient: ObservableObject {
         do {
             let messageData = try JSONDecoder().decode(MessageData.self, from: jsonData)
             DispatchQueue.main.async {
-                self.msg += messageData.content
+                self.msg += messageData.msg
                 self.messages[self.curIndex] = self.msg // 更新占位符数据
                 
             }
@@ -157,10 +165,8 @@ class SSEClient: ObservableObject {
 
 
 struct SSEChatView: View {
-    @StateObject private var sseClient = SSEClient()
     @State private var newMessage: String = ""
-    @EnvironmentObject var userManager: UserManager
-   
+    @StateObject private var sseClient = SSEClient()
     var body: some View {
         VStack {
             // 新增的横向 ScrollView
@@ -208,7 +214,7 @@ struct SSEChatView: View {
                     sseClient.messages.append(newMessage)
                     // 发送实际消息到服务器
                     if let url = URL(string: "http://39.101.191.170:8080/manyou/sendMsg2") {
-                        let tk=userManager.token!
+                        let tk=UserManager.shared.token!
                         let headers  = ["token": tk]
                         let queryParams = ["msg": newMessage, "fid": "1"]
                         sseClient.connect(url: url, headers: headers, queryParams: queryParams)
