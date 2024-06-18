@@ -2,7 +2,7 @@ import SwiftUI
 import EventSource
 
 struct MessageData: Codable {
-    let msg: String
+    let content: String
     
 }
 struct QA: Codable,Identifiable {
@@ -21,7 +21,7 @@ class SSEClient: ObservableObject {
     @Published var items: [QA] = [] // 新增的属性，用于存储从 API 获取的数据
     private var eventSourceDataTask: EventSource.DataTask?
     var curIndex:Int = -1;
-    var msg:String = "";
+    var content:String = "";
     func connect(url: URL, headers: [String: String], queryParams: [String: String?]) {
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         curIndex+=1
@@ -135,8 +135,8 @@ class SSEClient: ObservableObject {
         do {
             let messageData = try JSONDecoder().decode(MessageData.self, from: jsonData)
             DispatchQueue.main.async {
-                self.msg += messageData.msg
-                self.messages[self.curIndex] = self.msg // 更新占位符数据
+                self.content += messageData.content
+                self.messages[self.curIndex] = self.content // 更新占位符数据
                 
             }
         } catch {
