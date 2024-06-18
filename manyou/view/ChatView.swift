@@ -3,9 +3,24 @@ import EventSource
 
 struct MessageData: Codable {
     let content: String
-    private enum CodingKeys: String, CodingKey {
-          case content = "msg"
-      }
+        let msg: String
+        
+        enum CodingKeys: String, CodingKey {
+            case content
+            case msg
+        }
+        
+        init(content: String, msg: String) {
+            self.content = content
+            self.msg = msg
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.content = try container.decodeIfPresent(String.self, forKey: .content) ?? ""
+            self.msg = try container.decodeIfPresent(String.self, forKey: .msg) ?? ""
+        }
+    
 }
 struct QA: Codable,Identifiable {
     let id: UUID = UUID()
